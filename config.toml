@@ -21,11 +21,6 @@ taxonomies = [{ name = "tags", feed = true }]
 # Required for search page to work.
 index_format = "fuse_javascript"
 
-[markdown]
-# Required for code highlighting blocks.
-highlight_code = true
-highlight_theme = "css"
-
 [slugify]
 # Controls slugification for page/section URLs.
 paths = "on"
