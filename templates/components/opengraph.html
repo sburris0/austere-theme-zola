@@ -1,6 +1,6 @@
 {# OpenGraph and Twitter Card meta tags #}
 
-{% component og_preview(@config) %}
+{% component og_preview(@config, @current_url = none, @page = none, @section = none, @term = none, @taxonomy = none) %}
 <title>{{ <og_title/> }} | {{ config.title }}</title>
 <meta property="og:site_name" content="{{ config.title }}"/>
 <meta property="og:title" content="{{ <og_title/> }} | {{ config.title }}"/>
@@ -13,7 +13,7 @@
 <meta name="twitter:description" content="{{ <og_description/> }}"/>
 {% endcomponent og_preview %}
 
-{% component og_description(@config, @page = none) %}
+{% component og_description(@config, @page = none, @section = none) %}
 {%- if section and section.description -%}
 {{ section.description }}
 {%- elif page and page.summary -%}
@@ -25,7 +25,7 @@
 {%- endif -%}
 {% endcomponent og_description %}
 
-{% component og_title(@config, @page = none) %}
+{% component og_title(@config, @page = none, @section = none, @term = none, @taxonomy = none) %}
 {%- if section and section.title -%}
 {{ section.title | striptags }}
 {%- elif page and page.title -%}

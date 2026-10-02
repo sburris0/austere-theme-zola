@@ -22,7 +22,7 @@
     {% else -%}
     {% set_global items_per_row = nav_count -%}
     {% endif -%}
-    {% set basis = (100 / items_per_row) | round -%}
+    {% set basis = (100 / items_per_row) | round | int -%}
     <style>
 html{font-family:"Source Serif 4",Georgia,serif;font-size:1rem;line-height:1.7;margin:auto;max-width:70ch;padding:1.5rem 1em 3em}
 img{max-width:100%}img:not([src$=".svg"]),article>div,blockquote,pre{border-radius:.4rem}img[src$="#pixelate"]{image-rendering:pixelated}
@@ -47,23 +47,23 @@ nav{display:flex;flex-wrap:wrap;gap:.5rem 1.5rem;margin-bottom:1.5rem}nav a{font
     </style>
 
     {# Colour configuration with defaults #}
-    {% set light_bg = config.extra.colours.light.background | default(value="#FAF7F2") %}
-    {% set light_text = config.extra.colours.light.text | default(value="#1a1a1a") %}
-    {% set light_text_muted = config.extra.colours.light.text_muted | default(value="#3a3a3a") %}
-    {% set light_accent = config.extra.colours.light.accent | default(value="#B85450") %}
-    {% set light_accent_hover = config.extra.colours.light.accent_hover | default(value="#7A3533") %}
-    {% set light_code_bg = config.extra.colours.light.code_bg | default(value="#f0ebe3") %}
-    {% set light_border = config.extra.colours.light.border | default(value="#e0d9ce") %}
-    {% set dark_bg = config.extra.colours.dark.background | default(value="#141413") %}
-    {% set dark_text = config.extra.colours.dark.text | default(value="#e8e8e8") %}
-    {% set dark_text_muted = config.extra.colours.dark.text_muted | default(value="#a0a0a0") %}
-    {% set dark_accent = config.extra.colours.dark.accent | default(value="#E07A5F") %}
-    {% set dark_accent_hover = config.extra.colours.dark.accent_hover | default(value="#F4A594") %}
-    {% set dark_code_bg = config.extra.colours.dark.code_bg | default(value="#1e1e1d") %}
-    {% set dark_border = config.extra.colours.dark.border | default(value="#2a2a29") %}
+    {% set light_bg = config.extra.colours?.light?.background or "#FAF7F2" %}
+    {% set light_text = config.extra.colours?.light?.text or "#1a1a1a" %}
+    {% set light_text_muted = config.extra.colours?.light?.text_muted or "#3a3a3a" %}
+    {% set light_accent = config.extra.colours?.light?.accent or "#B85450" %}
+    {% set light_accent_hover = config.extra.colours?.light?.accent_hover or "#7A3533" %}
+    {% set light_code_bg = config.extra.colours?.light?.code_bg or "#f0ebe3" %}
+    {% set light_border = config.extra.colours?.light?.border or "#e0d9ce" %}
+    {% set dark_bg = config.extra.colours?.dark?.background or "#141413" %}
+    {% set dark_text = config.extra.colours?.dark?.text or "#e8e8e8" %}
+    {% set dark_text_muted = config.extra.colours?.dark?.text_muted or "#a0a0a0" %}
+    {% set dark_accent = config.extra.colours?.dark?.accent or "#E07A5F" %}
+    {% set dark_accent_hover = config.extra.colours?.dark?.accent_hover or "#F4A594" %}
+    {% set dark_code_bg = config.extra.colours?.dark?.code_bg or "#1e1e1d" %}
+    {% set dark_border = config.extra.colours?.dark?.border or "#2a2a29" %}
     <style>
     /* Light theme */
-    html.light{background:{{light_bg}};--tc:{{light_bg}};--accent:{{light_accent}};--accent-hover:{{light_accent_hover}};color:{{light_text}}}
+    html.light{color-scheme:light;background:{{light_bg}};--tc:{{light_bg}};--accent:{{light_accent}};--accent-hover:{{light_accent_hover}};color:{{light_text}}}
     html.light a{color:var(--accent);text-decoration:underline}
     html.light a:visited{color:var(--accent)}
     html.light a:hover{color:var(--accent-hover)}
@@ -73,12 +73,11 @@ nav{display:flex;flex-wrap:wrap;gap:.5rem 1.5rem;margin-bottom:1.5rem}nav a{font
     html.light strong{color:{{light_text}}}html.light header strong{color:var(--accent)}
     html.light blockquote{border-left:3px solid var(--accent);color:#555}
     html.light pre,html.light article>img,html.light article>p>img{background:{{light_code_bg}}}
+    html.light pre{background:{{light_code_bg}}!important}
     html.light code{background:{{light_code_bg}};color:{{light_text}}}
     html.light hr{border-color:{{light_border}}}
-    /* Light syntax highlighting */
-    html.light .z-comment{color:#6a737d;font-style:italic}html.light .z-keyword{color:#d73a49}html.light .z-string{color:#22863a}html.light .z-number{color:#005cc5}html.light .z-function{color:#6f42c1}html.light .z-type{color:#005cc5}html.light .z-constant{color:#005cc5}html.light .z-variable{color:#e36209}html.light .z-attribute{color:#6f42c1}html.light .z-tag{color:#22863a}html.light .z-operator{color:#d73a49}html.light .z-punctuation{color:#24292e}html.light .z-builtin{color:#6f42c1}html.light .z-label{color:#005cc5}html.light .z-namespace{color:#e36209}
     /* Dark theme */
-    html.dark{background:{{dark_bg}};--tc:{{dark_bg}};--accent:{{dark_accent}};--accent-hover:{{dark_accent_hover}};color:{{dark_text}}}
+    html.dark{color-scheme:dark;background:{{dark_bg}};--tc:{{dark_bg}};--accent:{{dark_accent}};--accent-hover:{{dark_accent_hover}};color:{{dark_text}}}
     html.dark a{color:var(--accent);text-decoration:underline}
     html.dark a:visited{color:var(--accent)}
     html.dark a:hover{color:var(--accent-hover)}
@@ -89,10 +88,9 @@ nav{display:flex;flex-wrap:wrap;gap:.5rem 1.5rem;margin-bottom:1.5rem}nav a{font
     html.dark blockquote{border-left:3px solid var(--accent);color:{{dark_text_muted}}}
     html.dark img[src$=".svg"],html.dark nav svg,html.dark .theme svg,html.dark footer svg{filter:invert(1)}
     html.dark pre,html.dark article>img,html.dark article>p>img{background:{{dark_code_bg}}}
+    html.dark pre{background:{{dark_code_bg}}!important}
     html.dark code{background:{{dark_code_bg}};color:{{dark_text}}}
     html.dark hr{border-color:{{dark_border}}}
-    /* Dark syntax highlighting */
-    html.dark .z-comment{color:#8b949e;font-style:italic}html.dark .z-keyword{color:#ff7b72}html.dark .z-string{color:#a5d6ff}html.dark .z-number{color:#79c0ff}html.dark .z-function{color:#d2a8ff}html.dark .z-type{color:#79c0ff}html.dark .z-constant{color:#79c0ff}html.dark .z-variable{color:#ffa657}html.dark .z-attribute{color:#d2a8ff}html.dark .z-tag{color:#7ee787}html.dark .z-operator{color:#ff7b72}html.dark .z-punctuation{color:#c9d1d9}html.dark .z-builtin{color:#d2a8ff}html.dark .z-label{color:#79c0ff}html.dark .z-namespace{color:#ffa657}
     /* Shared styles */
     a.active{color:var(--accent)}
     a:focus-visible{outline:2px solid currentColor;outline-offset:2px;border-radius:2px}
